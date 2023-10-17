@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <style>
+        .container{
+            display:grid;
+            grid-template-columns:3fr 1fr;
+        }
+    </style>
+    <div class="container">
+        <div>
+            <h1><a href="{% url "create-room" %}">Create Room</a></h1>
+            
+                <h2>{{room.id}}&nbsp;&nbsp;---&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span>{{room.name}}</span></h2>
+                <p>{{room.description}}</p>
+                <br><br>
+                <h3>Conversation</h3>
+                <hr>
+                <br>
+                {% for message in room_messages %}
+                <div>
+                    <small>{{message.user}}&nbsp;&nbsp;&nbsp;&nbsp;-- &nbsp;&nbsp;&nbsp;&nbsp;{{message.created|timesince}} ago {% if request.user == message.user %} &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;----------------------------------------------------- &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <a href="{% url 'delete-message' message.id %}">Delete</a>{% endif %}</small>
+                    <p>{{message.body}}</p>
+                </div>
+                <hr>
+                {% empty %}
+                No Disscussion yet
+                {% endfor %}
+                
+                {% if request.user.is_authenticated %}
+                <div class="comment-form">
+                    <form method="POST" action="">
+                        {% csrf_token %}
+                        <input type="text" name="convo" placeholder="Write your message here....">
+                    </form>
+                </div>
+                {% endif %}
+        </div>
+
+        <div>
+            <h2>Recent activity</h2>
+            <hr>
+            {% for user in participants %}
+            <p>@{{user.username}}</p>
+            <p></p>
+            {% endfor %}
+        </div>
+
+
+
+    </div>
+</body>
+</html>

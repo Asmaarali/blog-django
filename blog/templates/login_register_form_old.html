@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+        {% if login_page == 'Login' %}
+        <form method="POST" action="">
+            {% csrf_token %}
+            <label>Username:</label>
+            <input type="text" name="username">
+            <br>
+            <br>
+            <label>Password:</label>
+            <input type="password" name="password">
+            <button type="submit">Login</button>
+        </form>
+        <p>Haven't register yet?? <a href="{% url 'register' %}">Register Now</a></p>
+
+        {% else %}
+        <form method="POST" action="">
+            {% csrf_token %}
+            {{form.as_p}}
+            <input type="submit" value="Register">
+        </form>
+        <p>Already Registered?? <a href="{% url 'login' %}">Login Now</a></p>
+        {% endif %}
+{% comment %} ----------------------------------------------- {% endcomment %}
+        {% if messages %}
+        <ul class="messages">
+        {% for message in messages %}
+        <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+        {% endfor %}
+        </ul>
+        {% endif %}
+</body>
+</html>

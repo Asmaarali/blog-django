@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <style>
+        .home-container{
+            display:grid;
+            grid-template-columns:1fr 3fr 1fr;
+        }
+    </style>
+    <h1>{{user.username}}</h1>
+    <div class="home-container">
+        <div>
+            {% include "topics_component.html" %}
+        </div>
+        <div>
+            <h1><a href="{% url 'create-room' %}">Create Room</a></h1>
+            
+            <h3>{{rooms|length}} Rooms Found</h3>
+
+            {% include "feed_component.html" %}
+
+        </div>
+        <div>
+            {% include "activity_component.html" %}
+        </div>
+    </div>
+</body>
+</html>

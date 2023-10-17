@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="{% static 'styles/main.css' %}">
+</head>
+<body>
+    <style>
+        .home-container{
+            display:grid;
+            grid-template-columns:1fr 3fr 1fr;
+        }
+    </style>
+    <h1>NAVBAR</h1>
+    <h2>Hello <span style="color:red;text-transform:capitalize;font-size:30px;">{{request.user}}</span></h2>
+    {% if request.user.is_authenticated %}
+    <a href="{% url 'logout' %}">Logout</a>
+    {% else %}
+    <a href="{% url 'login' %}">Login</a>
+    {% endif %}
+    
+    <br>
+    <hr>
+    <br>
+    <br>
+    <form method="GET" action="{% url 'index' %}">
+        <input type="search" name="q" placeholder="Search Room..." required>
+    </form>
+    <br>
+    <div class="home-container">
+        <div>
+            {% include "topics_component.html" %}
+        </div>
+        <div>
+            <h1><a href="{% url 'create-room' %}">Create Room</a></h1>
+            
+            <h3>{{rooms|length}} Rooms Found</h3>
+
+            {% include "feed_component.html" %}
+
+        </div>
+        <div>
+            {% include "activity_component.html" %}
+        </div>
+    </div>
+
+    
+</body>
+</html>
